@@ -3,9 +3,10 @@
 0. Input screen []
 1. Input screen resizeable []
 2. Output resizeable [V] - 85% - polishing phase
-3. New Dataset, clearer, more words, atleast all commonly used words []
-4. Sentence prediction model comparison based on current sign vs predicted word []
-5. (Finisher) mobile vers []
+3. Debounce timer on detection to caption []
+4. New Dataset, clearer, more words, atleast all commonly used words []
+5. Sentence prediction model comparison based on current sign vs predicted word []
+6. (Finisher) mobile vers []
 
 # How to run
 
