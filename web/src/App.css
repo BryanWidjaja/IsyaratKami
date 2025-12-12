@@ -1,0 +1,331 @@
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+header h1 {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 30px rgba(100, 108, 255, 0.3);
+}
+
+.panels {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex: 1;
+  overflow: auto;
+  perspective: 1000px;
+}
+
+/* Common Panel Styling */
+.input-panel-wrapper, .output-panel-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+h2 {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* Resizable Box Styling */
+.custom-resizable {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.custom-resizable:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* React Resizable Handle Override */
+.react-resizable-handle {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.custom-resizable:hover .react-resizable-handle {
+  opacity: 1;
+}
+
+/* Input Panel Inner */
+.input-panel-inner video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* Output Panel Inner with Sentence Buffer */
+/* Output Panel Inner with Sentence Buffer */
+.output-panel-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 100%);
+  padding: 1rem;
+  box-sizing: border-box; /* Ensure padding doesn't affect width/height calculations */
+}
+
+/* Sections for layout */
+.top-section {
+    flex-shrink: 0;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.bottom-section {
+    flex-shrink: 0;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* Current Word Buffer Box */
+.current-word-box {
+    background: rgba(100, 108, 255, 0.1);
+    border: 1px dashed rgba(100, 108, 255, 0.3);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.current-word-box.empty {
+    opacity: 0.6;
+    border-style: dotted;
+}
+
+.current-word-box .label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+}
+
+.current-word-box .value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    letter-spacing: 2px;
+}
+
+.prediction-box {
+  font-size: 3rem;
+  font-weight: bold;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  padding: 0.5rem;
+  filter: drop-shadow(0 0 10px rgba(100, 108, 255, 0.3));
+  transition: all 0.2s ease;
+  min-height: 4rem;
+}
+
+.prediction-box.waiting {
+  font-size: 1.5rem;
+  opacity: 0.5;
+  -webkit-text-fill-color: initial;
+  color: rgba(255,255,255,0.5);
+  background: none;
+}
+
+.sentence-box {
+    width: 100%;
+    flex: 1; /* Takes up remaining space */
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 1.5rem;
+    color: white;
+    word-break: break-word; /* Better word breaking */
+    position: relative;
+    overflow-y: auto; /* Scroll if too long */
+    font-family: monospace;
+    min-height: 100px; /* Ensure visibility */
+}
+
+.cursor {
+    animation: blink 1s step-end infinite;
+    color: var(--primary-color);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.controls {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.controls button {
+    flex: 1;
+    padding: 0.8rem 0.5rem;
+    font-size: 0.9rem;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.controls button.primary-action {
+    background: rgba(68, 255, 68, 0.2);
+    border-color: rgba(68, 255, 68, 0.4);
+    font-weight: bold;
+}
+.controls button.primary-action:hover {
+    background: rgba(68, 255, 68, 0.4);
+}
+
+.controls button.danger {
+    background: rgba(255, 68, 68, 0.2);
+}
+.controls button.danger:hover {
+    background: rgba(255, 68, 68, 0.4);
+    border-color: #ff4444;
+}
+
+/* Suggestions */
+.suggestions-container {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    margin-bottom: 0.5rem; /* Space below suggestions before controls */
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.suggestion-chip {
+    background: rgba(100, 108, 255, 0.2);
+    border: 1px solid rgba(100, 108, 255, 0.4);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    color: white;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0; /* Prevent chips from shrinking */
+}
+
+.suggestion-chip:hover {
+    background: rgba(100, 108, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Connection Status Indicator */
+.connection-status {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.8rem;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    backdrop-filter: blur(5px);
+    z-index: 100;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ff4444;
+}
+.status-dot.connected {
+    background-color: #44ff44;
+    box-shadow: 0 0 8px #44ff44;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .app-container {
+    padding: 1rem;
+    height: auto;
+    overflow-y: auto; /* Allow scrolling on mobile */
+  }
+
+  .panels {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .input-panel-wrapper, .output-panel-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Override react-resizable inline styles */
+  .react-resizable {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Camera Panel: Force 4:3 aspect ratio so height doesn't collapse */
+  .input-panel-wrapper .custom-resizable {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 3;
+    min-height: auto; /* Let aspect ratio define height */
+  }
+
+  /* Output Panel: Ensure minimum height for text */
+  .output-panel-wrapper .custom-resizable {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 400px;
+  }
+
+  /* Removed conflicting video styles since parent now enforces aspect ratio */
+
+  .output-panel-inner {
+    min-height: 400px; /* Ensure space for controls */
+  }
+}

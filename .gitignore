@@ -1,2 +1,5 @@
 .venv/
 SIBI/
+node_modules/
+.env
+

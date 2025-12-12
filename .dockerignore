@@ -1,0 +1,10 @@
+
+__pycache__
+node_modules
+.git
+.gitignore
+.venv
+venv
+web/node_modules
+web/dist
+SIBI

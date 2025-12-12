@@ -5,3 +5,8 @@ scikit-learn
 mediapipe
 numpy
 PyQt5
+fastapi
+uvicorn
+pydantic
+python-dotenv
+openai
