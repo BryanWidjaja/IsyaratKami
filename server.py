@@ -66,7 +66,7 @@ class SuggestionRequest(BaseModel):
     context: str
 
 @app.post("/suggest")
-async def suggest(request: SuggestionRequest):
+def suggest(request: SuggestionRequest):
     print(f"DEBUG: Suggestion request received. Context: '{request.context}'")
     
     if not client:
@@ -114,7 +114,7 @@ async def suggest(request: SuggestionRequest):
         return {"suggestions": []}
 
 @app.post("/predict")
-async def predict(request: PredictionRequest):
+def predict(request: PredictionRequest):
     if classifier is None:
         raise HTTPException(status_code=503, detail="Model not loaded")
 

@@ -122,7 +122,13 @@ function App() {
                 className="custom-resizable"
              >
                 <div style={{width: '100%', height: '100%'}} className="input-panel-inner">
-                    <SignDetector onPrediction={setPrediction} />
+                    <SignDetector 
+                        onPrediction={setPrediction} 
+                        onGesture={(type) => {
+                            if (type === 'left') handleBackspace();
+                            if (type === 'right') handleSpace();
+                        }}
+                    />
                 </div>
              </ResizableBox>
            </div>
